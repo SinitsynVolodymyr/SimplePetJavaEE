@@ -1,6 +1,8 @@
 package com.dao;
 
 
+import com.exceptions.controller.UserIsExistException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -10,35 +12,32 @@ public abstract class AbstractController<E, K> {
     private Connection connection;
     private ConnectionPool connectionPool;
 
+
     public AbstractController() throws ClassNotFoundException, SQLException {
         connectionPool = ConnectionPool.getConnectionPool();
         connection = connectionPool.getConnection();
     }
 
-    public abstract boolean remove(K id);
-    public abstract boolean create(E entity);
-    public abstract List<E> getAll();
-    public abstract E update(E entity);
-    public abstract E getEntityByKey(K id);
+    public abstract boolean remove(K id) throws SQLException;
+    public abstract boolean create(E entity) throws SQLException, UserIsExistException;
+    public abstract List<E> getAll() throws SQLException;
+    public abstract boolean update(E entity) throws SQLException;
+    public abstract E getEntityByKey(K id) throws SQLException;
 
-    public PreparedStatement getPrepareStatement(String sql) {
+    public abstract String getTableName();
+
+    public PreparedStatement getPrepareStatement(String sql) throws SQLException {
         PreparedStatement preparedStatement = null;
-        try {
+
             preparedStatement = connection.prepareStatement(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
 
         return preparedStatement;
     }
 
-    public void closePrepareStatement(PreparedStatement ps) {
+    public void closePrepareStatement(PreparedStatement ps) throws SQLException {
         if (ps != null) {
-            try {
                 ps.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 
