@@ -12,9 +12,16 @@ import java.util.Locale;
 
 public class UserController extends AbstractController<User, String> {
     private static final String tableName = "accounts";
+    private static UserController controller;
 
+    public static UserController getController() throws SQLException, ClassNotFoundException {
+        if (controller==null){
+            controller = new UserController();
+        }
+        return controller;
+    }
 
-    public UserController() throws ClassNotFoundException, SQLException {
+    private UserController() throws ClassNotFoundException, SQLException {
         super();
     }
 
