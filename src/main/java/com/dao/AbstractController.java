@@ -13,6 +13,7 @@ public abstract class AbstractController<E, K> {
     private ConnectionPool connectionPool;
 
 
+
     public AbstractController() throws ClassNotFoundException, SQLException {
         connectionPool = ConnectionPool.getConnectionPool();
         connection = connectionPool.getConnection();
@@ -41,7 +42,7 @@ public abstract class AbstractController<E, K> {
         }
     }
 
-    public void addConnection() {
+    public void addConnectionToPull() {
         connectionPool.returnConnection(connection);
     }
 

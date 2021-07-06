@@ -13,6 +13,7 @@ import java.util.Locale;
 public class UserController extends AbstractController<User, String> {
     private static final String tableName = "accounts";
 
+
     public UserController() throws ClassNotFoundException, SQLException {
         super();
     }
@@ -28,7 +29,8 @@ public class UserController extends AbstractController<User, String> {
                 user.setMoney(rs.getFloat("money"));
                 userList.add(user);
             }
-            //closePrepareStatement(ps);
+            closePrepareStatement(ps);
+            rs.close();
 
         return userList;
     }
@@ -46,9 +48,11 @@ public class UserController extends AbstractController<User, String> {
             PreparedStatement ps = getPrepareStatement(sqlQuery);
 
             ResultSet resultSet = ps.executeQuery();
-            //closePrepareStatement(ps);
+
             if (resultSet.next()){
-                 user.getPass().equals(resultSet.getString("pass"));
+                user.getPass().equals(resultSet.getString("pass"));
+                closePrepareStatement(ps);
+                resultSet.close();
                 return true;
             }else{
                 return false;
@@ -70,6 +74,8 @@ public class UserController extends AbstractController<User, String> {
         if (resultSet.next()){
             User user = new User(resultSet.getString("name"));
             user.setMoney(resultSet.getFloat("money"));
+            closePrepareStatement(ps);
+            resultSet.close();
             return user;
         }
 
@@ -93,8 +99,8 @@ public class UserController extends AbstractController<User, String> {
                     "money = " + entity.getMoney() +
                     "  WHERE lower(name) = '" + login + "'");
         }
-        boolean isPass = prepareStatement.execute();
-        //closePrepareStatement(prepareStatement);
+        prepareStatement.execute();
+        closePrepareStatement(prepareStatement);
         return true;
     }
 
@@ -104,8 +110,8 @@ public class UserController extends AbstractController<User, String> {
         String sqlQuery = "DELETE FROM "+this.getTableName()+" WHERE lower(name) = '"+login+"'";
 
         PreparedStatement prepareStatement = getPrepareStatement(sqlQuery);
-        boolean isPass = prepareStatement.execute();
-        //closePrepareStatement(prepareStatement);
+        prepareStatement.execute();
+        closePrepareStatement(prepareStatement);
         return true;
     }
 
@@ -119,7 +125,7 @@ public class UserController extends AbstractController<User, String> {
         //    return ps.execute();
 
             ps.execute();
-
+            closePrepareStatement(ps);
           return true;
         }else{
             throw new UserIsExistException();
@@ -135,7 +141,7 @@ public class UserController extends AbstractController<User, String> {
 
         PreparedStatement ps = getPrepareStatement(sqlQuery);
         ps.execute();
-        //closePrepareStatement(ps);
+        closePrepareStatement(ps);
         return true;
     }
 
