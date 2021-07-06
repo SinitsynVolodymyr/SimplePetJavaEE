@@ -34,5 +34,11 @@ class ConnectionPoolTest {
         ConnectionPool connectionPool = ConnectionPool.getConnectionPool();
         Connection connection = connectionPool.getConnection();
         connectionPool.returnConnection(connection);
+        Connection connection2 = connectionPool.getConnection();
+        Connection connection3 = connectionPool.getConnection();
+
+        assertEquals(connection,connection2);
+        assertNotEquals(connection,connection3);
+
     }
 }

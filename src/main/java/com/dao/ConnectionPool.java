@@ -24,7 +24,13 @@ public class ConnectionPool {
     }
 
     public Connection getConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:postgresql://localhost:5432/java_ee_db","postgres","1");
+        if (connectionList.size()>0){
+            Connection result = connectionList.get(0);
+            connectionList.remove(0);
+            return result;
+        }else {
+            return DriverManager.getConnection("jdbc:postgresql://localhost:5432/java_ee_db", "postgres", "1");
+        }
     }
 
     public void returnConnection(Connection connection) {
