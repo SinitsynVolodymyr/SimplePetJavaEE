@@ -26,12 +26,12 @@ public class AuthServlet extends HttpServlet {
             if (logIn(login,pass,request.getSession())){
                 response.sendRedirect("/");
             }else {
-                response.sendRedirect("/login?error=1");
+                response.sendRedirect("/login?error=1&login="+login);
             }
         } catch (SQLException e) {
-            response.sendRedirect("/login?error=2");
+            response.sendRedirect("/login?error=2&login="+login);
         } catch (ClassNotFoundException e) {
-            response.sendRedirect("/login?error=3");
+            response.sendRedirect("/login?error=3&login="+login);
         }
 
     }

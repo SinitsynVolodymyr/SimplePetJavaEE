@@ -47,8 +47,9 @@
                 Register
             </div>
         </a>
+        <% boolean isExistLogin = request.getParameter("login")!=null; %>
         <div class="form-floating">
-            <input type="text" name="login" class="form-control" id="floatingInput" placeholder="login">
+            <input type="text" name="login" <% if (isExistLogin) out.print("value='"+request.getParameter("login")+"'"); %>  class="form-control" id="floatingInput" placeholder="login">
             <label for="floatingInput">Login</label>
         </div>
         <div class="form-floating">

@@ -49,26 +49,31 @@ public class ControllerServlet extends HttpServlet {
                 case ("register"):
                     String regLogin = request.getParameter("reglogin");
                     String regPass = request.getParameter("regpass");
+                    String regpassRepeat = request.getParameter("regpassRepeat");
 
                     if (regLogin!=null&&regPass!=null){
-                        if (regLogin!=""&&regPass!=""){
-                            try {
-                                UserController controller = UserController.getController();
-                                User user = new User(regLogin, regPass);
-                                user.setMoney(1000);
-                                controller.create(user);
+                        if (regLogin!=""&&regPass!="") {
+                            if (regPass.equals(regpassRepeat)){
+                                try {
+                                    UserController controller = UserController.getController();
+                                    User user = new User(regLogin, regPass);
+                                    user.setMoney(1000);
+                                    controller.create(user);
 
-                                request.getSession().invalidate();
-                                if (!AuthServlet.logIn(regLogin,regPass,request.getSession()))
-                                    response.sendRedirect("/register?error=4");
-                                else
-                                    response.sendRedirect("/");
-                            } catch (SQLException throwables) {
-                                response.sendRedirect("/register?error=1");
-                            } catch (ClassNotFoundException e) {
-                                response.sendRedirect("/register?error=2");
-                            } catch (UserIsExistException e) {
-                                response.sendRedirect("/register?error=3");
+                                    request.getSession().invalidate();
+                                    if (!AuthServlet.logIn(regLogin, regPass, request.getSession()))
+                                        response.sendRedirect("/register?error=1&login="+regLogin);
+                                    else
+                                        response.sendRedirect("/");
+                                } catch (SQLException throwables) {
+                                    response.sendRedirect("/register?error=2&login="+regLogin);
+                                } catch (ClassNotFoundException e) {
+                                    response.sendRedirect("/register?error=3&login="+regLogin);
+                                } catch (UserIsExistException e) {
+                                    response.sendRedirect("/register?error=4&login="+regLogin);
+                                }
+                            }else{
+                                response.sendRedirect("/register?error=5&login="+regLogin);
                             }
                         }
                     }

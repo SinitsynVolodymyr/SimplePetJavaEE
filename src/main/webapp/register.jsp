@@ -49,13 +49,19 @@
             </div>
         </a>
 
+        <% boolean isExistLogin = request.getParameter("login")!=null; %>
+
         <div class="form-floating">
-            <input type="text" name="reglogin" class="form-control" id="floatingInput" placeholder="login">
+            <input type="text" name="reglogin" <% if (isExistLogin) out.print("value='"+request.getParameter("login")+"'"); %> class="form-control" id="floatingInput" placeholder="login">
             <label for="floatingInput">Login</label>
         </div>
         <div class="form-floating">
             <input type="password" name="regpass" class="form-control" id="floatingPassword" placeholder="Password">
             <label for="floatingPassword">Password</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" name="regpassRepeat" class="form-control" id="reFloatingPassword" placeholder="Password">
+            <label for="floatingPassword">Rep. password</label>
         </div>
 
         <div class="checkbox mb-3">
@@ -67,5 +73,5 @@
     </form>
 </main>
 
-
+</body>
 </html>
