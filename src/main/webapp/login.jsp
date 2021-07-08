@@ -41,8 +41,12 @@
 <main class="form-signin">
     <form action="/auth" method="post">
 
-        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-        <br>
+        <h1 class="h3 mb-3 fw-normal">Sign in</h1>
+        <a style="text-align: right;" href="/register">
+            <div>
+                Register
+            </div>
+        </a>
         <div class="form-floating">
             <input type="text" name="login" class="form-control" id="floatingInput" placeholder="login">
             <label for="floatingInput">Login</label>
