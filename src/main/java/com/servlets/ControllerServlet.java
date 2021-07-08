@@ -92,6 +92,8 @@ public class ControllerServlet extends HttpServlet {
                     response.sendRedirect("/");
                     break;
 
+                default:
+                    response.sendRedirect("/");
             }
 
 

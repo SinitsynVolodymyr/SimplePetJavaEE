@@ -62,6 +62,7 @@ class UserControllerTest {
         User yura = new User("Yura");
         yura.setMoney(1200);
         try {
+
             assertTrue(uc.updateMoney(yura));
         }catch (SQLException e) {
             fail(e);

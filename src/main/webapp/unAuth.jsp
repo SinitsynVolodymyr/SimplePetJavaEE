@@ -6,7 +6,7 @@
 </head>
     <body>
         <h1>
-            <a href="/login">Log In</a>
+            <a href="/login">Sign In</a>
             <br>
             <a href="/register">Register</a>
         </h1>
