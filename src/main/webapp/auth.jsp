@@ -13,6 +13,9 @@
             <form action="/session" method="post">
                 <button type="submit" name="request" value="exit" class="btn-link">Exit</button>
             </form>
+            <form action="/session" method="post">
+                <button type="submit" name="request" value="delete" class="btn-link">Delete account</button>
+            </form>
 
         </h1>
     </body>

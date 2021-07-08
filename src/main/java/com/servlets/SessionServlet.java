@@ -36,9 +36,31 @@ public class SessionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String req = request.getParameter("request");
         if (req!=null){
-            if (req.toLowerCase().equals("exit")){
-                request.getSession().invalidate();
+
+            switch (req.toLowerCase()){
+                case ("exit"):
+                    request.getSession().invalidate();
+                    break;
+                case ("delete"):
+                    HttpSession session = request.getSession();
+                    String login = (String) session.getAttribute("login");
+                    if (login!=null){
+                        try {
+                            UserController controller = UserController.getController();
+                            if (controller.remove(login))
+                                session.invalidate();
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    break;
+
             }
+
+
         }
         response.sendRedirect("/");
     }
