@@ -32,7 +32,7 @@
 
     <!-- Custom styles for this template -->
 
-    <style><%@include file="/css/signin.css"%></style>
+    <style><%@include file="/WEB-INF/css/signin.css"%></style>
 </head>
 
 
