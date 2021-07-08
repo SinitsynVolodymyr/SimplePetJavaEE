@@ -57,10 +57,14 @@ public class UserController extends AbstractController<User, String> {
             ResultSet resultSet = ps.executeQuery();
 
             if (resultSet.next()){
-                user.getPass().equals(resultSet.getString("pass"));
+                boolean result = false;
+                if(user.getPass().equals(resultSet.getString("pass")))
+                    result =  true;
+
                 closePrepareStatement(ps);
                 resultSet.close();
-                return true;
+                return result;
+
             }else{
                 return false;
             }
