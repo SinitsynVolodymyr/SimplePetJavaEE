@@ -7,6 +7,13 @@
     <body>
         <h1>
             <a>Money: <%= request.getSession().getAttribute("money") %></a>
+            <br>
+            <br>
+            <br>
+            <form action="/session" method="post">
+                <button type="submit" name="request" value="exit" class="btn-link">Exit</button>
+            </form>
+
         </h1>
     </body>
 </html>

@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Locale;
 
 @WebServlet(name = "SessionServlet", value = "/session")
 public class SessionServlet extends HttpServlet {
@@ -33,6 +34,12 @@ public class SessionServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        String req = request.getParameter("request");
+        if (req!=null){
+            if (req.toLowerCase().equals("exit")){
+                request.getSession().invalidate();
+            }
+        }
+        response.sendRedirect("/");
     }
 }

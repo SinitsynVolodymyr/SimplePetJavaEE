@@ -7,7 +7,6 @@
     <body>
         <h2>
             <form action="/auth" method="post">
-                <p><b>Как по вашему мнению расшифровывается аббревиатура &quot;ОС&quot;?</b></p>
                 <p>
                     Login: <input type="text" name="login"><Br>
                     Password: <input type="password" name="pass"><Br>
