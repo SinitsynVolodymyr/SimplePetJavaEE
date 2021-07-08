@@ -2,13 +2,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Auth</title>
+    <title>Register</title>
 </head>
     <body>
-        <h1>
-            <a href="/login">Log In</a>
-            <br>
-            <a href="/register">Register</a>
-        </h1>
+    <h2>
+        <form action="/session" method="post">
+            <p>
+                Login: <input type="text" name="reglogin"><Br>
+                Password: <input type="password" name="regpass"><Br>
+            <p><input type="submit" name="request" value="register"></p>
+        </form>
+    </h2>
     </body>
 </html>

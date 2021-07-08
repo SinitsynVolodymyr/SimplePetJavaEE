@@ -22,14 +22,10 @@ public class AuthServlet extends HttpServlet {
         String login = request.getParameter("login");
         String pass = request.getParameter("pass");
 
-        User user = new User(login, pass);
-
         try {
-            if (UserController.getController().isAuth(user)){
-                HttpSession session = request.getSession();
-                session.setAttribute("login", login);
+            if (logIn(login,pass,request.getSession())){
                 response.sendRedirect("/");
-            }else{
+            }else {
                 response.sendRedirect("/login?error=1");
             }
         } catch (SQLException e) {
@@ -38,5 +34,15 @@ public class AuthServlet extends HttpServlet {
             response.sendRedirect("/login?error=3");
         }
 
+    }
+
+    public static boolean logIn(String login, String pass, HttpSession session) throws SQLException, ClassNotFoundException {
+        User user = new User(login, pass);
+        if (UserController.getController().isAuth(user)){
+            session.setAttribute("login", login);
+            return true;
+        }else{
+            return false;
+        }
     }
 }
