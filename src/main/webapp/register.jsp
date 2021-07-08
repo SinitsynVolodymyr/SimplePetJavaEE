@@ -65,7 +65,7 @@
 <!-- ICONS -->
 
 
-
+<% boolean isExistLgReq = request.getParameter("login")!=null; %>
 
 <div class="wrapper">
     <div class="header">
@@ -86,7 +86,7 @@
                     </g>
                 </svg>
             </label>
-            <input class="user-input" type="text" name="reglogin"  placeholder="My name is"  />
+            <input class="user-input" name="reglogin" <% if (isExistLgReq) out.print("value="+request.getParameter("login")); %> type="text"   placeholder="My name is"  />
         </div>
         <div>
             <label class="lock" >
@@ -97,6 +97,16 @@
                 </svg>
             </label>
             <input type="password" name="regpass"  placeholder="" />
+        </div>
+        <div>
+            <label class="lock" >
+                <svg viewBox="0 0 32 32">
+                    <g filter="">
+                        <use xlink:href="#lock-locker"></use>
+                    </g>
+                </svg>
+            </label>
+            <input type="password" name="regpassRepeat"  placeholder="" />
         </div>
         <div>
             <input type="submit" name="request" value="register" />

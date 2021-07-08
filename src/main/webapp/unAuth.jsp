@@ -32,7 +32,7 @@
 
 
     <!-- Custom styles for this template -->
-    <style><%@include file="/WEB-INF/css/cover.css"%></style>
+    <style><%@include file="/css/cover.css"%></style>
 </head>
 
 <body class="d-flex h-100 text-center text-white bg-dark">

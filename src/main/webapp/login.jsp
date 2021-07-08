@@ -15,6 +15,8 @@
 </head>
 
 
+<% boolean isExistLgReq = request.getParameter("login")!=null; %>
+
 <body>
 <!-- ICONS -->
 <svg id="svg-source" height="0" version="1.1"  xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +88,7 @@
                     </g>
                 </svg>
             </label>
-            <input class="user-input" type="text" name="login"  placeholder="My name is"  />
+            <input class="user-input" name="login"  <% if (isExistLgReq) out.print("value="+request.getParameter("login")); %>  type="text" placeholder="My name is"  />
         </div>
         <div>
             <label class="lock" >
