@@ -40,6 +40,10 @@ public class User {
         this.money += money;
     }
 
+    public void takeMoney(float money) {
+        this.money -= money;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

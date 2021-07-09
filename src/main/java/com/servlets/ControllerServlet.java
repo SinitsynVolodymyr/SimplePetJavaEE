@@ -61,9 +61,9 @@ public class ControllerServlet extends HttpServlet {
                                 if (user.getMoney()>=amount){
                                     User userTo = controller.getEntityByKey(toSend);
                                     if (userTo != null) {
-                                        user.setMoney(user.getMoney()-amount);
+                                        user.takeMoney(amount);
+                                        userTo.addMoney(amount);
                                         controller.updateMoney(user);
-                                        userTo.setMoney(userTo.getMoney()+amount);
                                         controller.updateMoney(userTo);
                                         response.sendRedirect("/");
                                     }else{
