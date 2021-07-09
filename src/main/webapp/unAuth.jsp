@@ -51,7 +51,7 @@
 
     <main class="px-3">
         <h1>Welcome to the website.</h1>
-        <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
+        <p class="lead">This site is a pet project. It's made using Java EE. With it I test my knowledge.</p>
         <p class="lead">
 
         </p>

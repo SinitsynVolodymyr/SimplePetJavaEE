@@ -38,6 +38,7 @@ public class ControllerServlet extends HttpServlet {
         String req = request.getParameter("request");
 
         HttpSession session = request.getSession();
+        String login = (String) session.getAttribute("login");
 
         if (req!=null){
 
@@ -46,13 +47,55 @@ public class ControllerServlet extends HttpServlet {
                     request.getSession().invalidate();
                     response.sendRedirect("/");
                     break;
+                case ("send"):
+                    String toSend = request.getParameter("toSend");
+                    String amountSend = request.getParameter("amountSend");
+                    int amount = 0;
+
+                    if (login!=null&&!login.equals("")){
+                        if (toSend!=null&&!toSend.equals("")){
+                            try {
+                                amount = Integer.valueOf(amountSend);
+                                UserController controller = UserController.getController();
+                                User user = controller.getEntityByKey(login);
+                                if (user.getMoney()>=amount){
+                                    User userTo = controller.getEntityByKey(toSend);
+                                    if (userTo != null) {
+                                        user.setMoney(user.getMoney()-amount);
+                                        controller.updateMoney(user);
+                                        userTo.setMoney(userTo.getMoney()+amount);
+                                        controller.updateMoney(userTo);
+                                        response.sendRedirect("/");
+                                    }else{
+                                        response.sendRedirect("/?error=1&tologin="+toSend);
+                                    }
+                                }else{
+                                    response.sendRedirect("/?error=2&tologin="+toSend);
+                                }
+
+                            }catch (NumberFormatException e){
+
+                            } catch (SQLException throwables) {
+                                response.sendRedirect("/?error=3&tologin="+toSend);
+                            } catch (ClassNotFoundException e) {
+                                response.sendRedirect("/?error=4&tologin="+toSend);
+                            }
+                        }else{
+                            response.sendRedirect("/?error=5&tologin="+toSend);
+                        }
+                    }else{
+                        response.sendRedirect("/?error=6&tologin="+toSend);
+                    }
+
+
+                    break;
                 case ("register"):
                     String regLogin = request.getParameter("reglogin");
                     String regPass = request.getParameter("regpass");
                     String regpassRepeat = request.getParameter("regpassRepeat");
 
                     if (regLogin!=null&&regPass!=null){
-                        if (regLogin!=""&&regPass!="") {
+                        if (!regLogin.equals("")&&!regPass.equals("")) {
                             if (regPass.equals(regpassRepeat)){
                                 try {
                                     UserController controller = UserController.getController();
@@ -75,14 +118,17 @@ public class ControllerServlet extends HttpServlet {
                             }else{
                                 response.sendRedirect("/register?error=5&login="+regLogin);
                             }
+                        }else{
+                            response.sendRedirect("/register?error=6&login="+regLogin);
                         }
+                    }else{
+                        response.sendRedirect("/register?error=7&login="+regLogin);
                     }
 
 
 
                     break;
                 case ("delete"):
-                    String login = (String) session.getAttribute("login");
                     if (login!=null){
                         try {
                             UserController controller = UserController.getController();

@@ -15,6 +15,7 @@ public class IndexServlet extends HttpServlet {
                 if (request.getSession().getAttribute("money") != null) {
                     RequestDispatcher rd = request.getRequestDispatcher("/content.jsp");
                     rd.forward(request, response);
+                    request.getSession().removeAttribute("money");
                 } else {
                     response.sendRedirect("/session");
                 }
