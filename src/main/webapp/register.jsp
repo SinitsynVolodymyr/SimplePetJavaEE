@@ -111,17 +111,19 @@
         <div>
             <input type="submit" name="request" value="register" />
         </div>
-        <div class="radio-check">
-            <input type="radio" class="radio-no" id="no" name="remember" value="no" checked>
-            <label for="no"><i class="fa fa-times"></i></label>
-            <input type="radio" class="radio-yes" id="yes" name="remember" value="yes">
-            <label for="yes"><i class="fa fa-check"></i></label>
-            <span class="switch-selection"></span>
-        </div>
-        <span class="check-label">Remember me</span>
-        <span class="forgot-label">Lost your password?</span>
-        <div class="clear"></div>
-    </form>
+        <!--
+       <div class="radio-check">
+           <input type="radio" class="radio-no" id="no" name="remember" value="no" checked>
+           <label for="no"><i class="fa fa-times"></i></label>
+           <input type="radio" class="radio-yes" id="yes" name="remember" value="yes">
+           <label for="yes"><i class="fa fa-check"></i></label>
+           <span class="switch-selection"></span>
+       </div>
+       <span class="check-label">Remember me</span>
+       <span class="forgot-label">Lost your password?</span>
+       -->
+       <div class="clear"></div>
+   </form>
 </div>
 
 

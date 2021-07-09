@@ -103,6 +103,7 @@
         <div>
             <input type="submit" value="Sign in" />
         </div>
+        <!--
         <div class="radio-check">
             <input type="radio" class="radio-no" id="no" name="remember" value="no" checked>
             <label for="no"><i class="fa fa-times"></i></label>
@@ -112,6 +113,7 @@
         </div>
         <span class="check-label">Remember me</span>
         <span class="forgot-label">Lost your password?</span>
+        -->
         <div class="clear"></div>
     </form>
 </div>
