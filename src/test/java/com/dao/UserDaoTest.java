@@ -13,13 +13,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class UserControllerTest {
+class UserDaoTest {
 
     @Test
     void getAll() {
 
         try {
-            UserController userC = UserController.getController();
+            UserDao userC = UserDao.getController();
             List<User> all = userC.getAll();
             assertTrue(all.size()>0);
         } catch (ClassNotFoundException e) {
@@ -33,7 +33,7 @@ class UserControllerTest {
     @Order(1)
     @Test
     void create() throws ClassNotFoundException, SQLException {
-        UserController uc = UserController.getController();
+        UserDao uc = UserDao.getController();
         User user = new User("Yura", "aba452");
         try {
             assertTrue(uc.create(user));
@@ -46,7 +46,7 @@ class UserControllerTest {
     @Order(2)
     @Test
     void getEntityByKey() throws ClassNotFoundException, SQLException {
-        UserController uc = UserController.getController();
+        UserDao uc = UserDao.getController();
         try {
             User yura = uc.getEntityByKey("Yura");
             assertNotNull(yura);
@@ -58,7 +58,7 @@ class UserControllerTest {
     @Order(3)
     @Test
     void updateMoney() throws SQLException, ClassNotFoundException {
-        UserController uc = UserController.getController();
+        UserDao uc = UserDao.getController();
         User yura = new User("Yura");
         yura.setMoney(1200);
         try {
@@ -78,7 +78,7 @@ class UserControllerTest {
         User yura = new User("YURA");
         yura.setMoney(8000);
 
-        UserController uc = UserController.getController();
+        UserDao uc = UserDao.getController();
         try {
             assertTrue(uc.update(yura));
         }catch (SQLException e) {
@@ -111,7 +111,7 @@ class UserControllerTest {
     @Test
     void remove() throws SQLException, ClassNotFoundException {
 
-        UserController uc = UserController.getController();
+        UserDao uc = UserDao.getController();
 
         assertTrue(uc.remove("yura"));
 

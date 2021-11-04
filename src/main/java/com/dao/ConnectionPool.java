@@ -29,7 +29,7 @@ public class ConnectionPool {
             connectionList.remove(0);
             return result;
         }else {
-            return DriverManager.getConnection("jdbc:postgresql://localhost:5432/java_ee_db", "postgres", "1");
+            return DriverManager.getConnection("jdbc:postgresql://localhost:5432/java_ee_db", "root", "0000");
         }
     }
 

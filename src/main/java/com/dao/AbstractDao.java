@@ -8,13 +8,13 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-public abstract class AbstractController<E, K> {
+public abstract class AbstractDao<E, K> {
     private Connection connection;
     private ConnectionPool connectionPool;
 
 
 
-    public AbstractController() throws ClassNotFoundException, SQLException {
+    public AbstractDao() throws ClassNotFoundException, SQLException {
         connectionPool = ConnectionPool.getConnectionPool();
         connection = connectionPool.getConnection();
     }
@@ -34,6 +34,10 @@ public abstract class AbstractController<E, K> {
 
 
         return preparedStatement;
+    }
+
+    public Connection getConnection() throws SQLException {
+        return connection;
     }
 
     public void closePrepareStatement(PreparedStatement ps) throws SQLException {

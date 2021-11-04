@@ -1,6 +1,6 @@
 package com.servlets;
 
-import com.dao.UserController;
+import com.dao.UserDao;
 import com.entity.User;
 import com.exceptions.controller.UserIsExistException;
 import jakarta.servlet.*;
@@ -9,16 +9,19 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Locale;
 
-@WebServlet(name = "SessionServlet", value = "/session")
-public class ControllerServlet extends HttpServlet {
+//@WebServlet(name = "SessionServlet", value = "/session")
+public class SessionServlet extends HttpServlet {
+
+    public SessionServlet() {
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = (String) request.getSession().getAttribute("login");
         if (login!=null){
             try {
-                UserController controller = UserController.getController();
+                UserDao controller = UserDao.getController();
                 User user = controller.getEntityByKey(login);
                 request.getSession().setAttribute("money",user.getMoney());
                 response.sendRedirect("/");
@@ -56,15 +59,14 @@ public class ControllerServlet extends HttpServlet {
                         if (toSend!=null&&!toSend.equals("")){
                             try {
                                 amount = Integer.valueOf(amountSend);
-                                UserController controller = UserController.getController();
+                                UserDao controller = UserDao.getController();
                                 User user = controller.getEntityByKey(login);
                                 if (user.getMoney()>=amount){
                                     User userTo = controller.getEntityByKey(toSend);
                                     if (userTo != null) {
                                         user.takeMoney(amount);
                                         userTo.addMoney(amount);
-                                        controller.updateMoney(user);
-                                        controller.updateMoney(userTo);
+                                        controller.sendMoney(user,userTo);
                                         response.sendRedirect("/");
                                     }else{
                                         response.sendRedirect("/?error=1&tologin="+toSend);
@@ -98,7 +100,7 @@ public class ControllerServlet extends HttpServlet {
                         if (!regLogin.equals("")&&!regPass.equals("")) {
                             if (regPass.equals(regpassRepeat)){
                                 try {
-                                    UserController controller = UserController.getController();
+                                    UserDao controller = UserDao.getController();
                                     User user = new User(regLogin, regPass);
                                     user.setMoney(1000);
                                     controller.create(user);
@@ -131,7 +133,7 @@ public class ControllerServlet extends HttpServlet {
                 case ("delete"):
                     if (login!=null){
                         try {
-                            UserController controller = UserController.getController();
+                            UserDao controller = UserDao.getController();
                             if (controller.remove(login))
                                 session.invalidate();
                         } catch (SQLException throwables) {

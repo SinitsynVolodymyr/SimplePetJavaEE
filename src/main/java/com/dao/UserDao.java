@@ -3,25 +3,25 @@ package com.dao;
 import com.entity.User;
 import com.exceptions.controller.UserIsExistException;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-public class UserController extends AbstractController<User, String> {
+public class UserDao extends AbstractDao<User, String> {
     private static final String tableName = "accounts";
-    private static UserController controller;
+    private static UserDao controller;
 
-    public static UserController getController() throws SQLException, ClassNotFoundException {
+    public static UserDao getController() throws SQLException, ClassNotFoundException {
         if (controller==null){
-            controller = new UserController();
+            controller = new UserDao();
         }
         return controller;
     }
 
-    private UserController() throws ClassNotFoundException, SQLException {
+    private UserDao() throws ClassNotFoundException, SQLException {
         super();
     }
 
@@ -153,6 +153,34 @@ public class UserController extends AbstractController<User, String> {
         PreparedStatement ps = getPrepareStatement(sqlQuery);
         ps.execute();
         closePrepareStatement(ps);
+        return true;
+    }
+
+    public boolean sendMoney(User userFrom, User userTo) throws SQLException {
+
+        Connection con = getConnection();
+
+        String sqlQueryUserFrom = "UPDATE "+this.getTableName()+" SET " +
+                "money = "+userFrom.getMoney()+" " +
+                "WHERE lower(name) = '"+userFrom.getLowerLogin()+"'";
+
+        String sqlQueryUserTo = "UPDATE "+this.getTableName()+" SET " +
+                "money = "+userTo.getMoney()+" " +
+                "WHERE lower(name) = '"+userTo.getLowerLogin()+"'";
+
+
+        try (PreparedStatement updateUserFrom = con.prepareStatement(sqlQueryUserFrom);
+             PreparedStatement updateUserTo = con.prepareStatement(sqlQueryUserTo))
+        {
+            con.setAutoCommit(false);
+            updateUserFrom.execute();
+            updateUserTo.execute();
+            con.commit();
+        } catch (SQLException e) {
+            con.rollback();
+            return false;
+        }
+
         return true;
     }
 

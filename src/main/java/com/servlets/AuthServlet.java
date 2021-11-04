@@ -1,6 +1,6 @@
 package com.servlets;
 
-import com.dao.UserController;
+import com.dao.UserDao;
 import com.entity.User;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -38,7 +38,7 @@ public class AuthServlet extends HttpServlet {
 
     public static boolean logIn(String login, String pass, HttpSession session) throws SQLException, ClassNotFoundException {
         User user = new User(login, pass);
-        if (UserController.getController().isAuth(user)){
+        if (UserDao.getController().isAuth(user)){
             session.setAttribute("login", login);
             return true;
         }else{
